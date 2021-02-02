@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AlunoService {
 
@@ -23,8 +26,9 @@ public class AlunoService {
 
         //TODO validar se o CPF existe no banco antes de existir, caso exista retornar mensagem de erro
 
-
-
+        List<AlunoEntity> op = alunoRepository.findByCpf(entity.getCpf());
+        if (!op.isEmpty())
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Aluno já existe no banco de dadps");
 
         entity = alunoRepository.save(entity);
 

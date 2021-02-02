@@ -35,8 +35,47 @@ public class TurmaService {
         //TODO implementar a conversão da lista de objetos de TurmaEntity para TurmaDTO e retornar a listDTO preenchida
 
 
+        for(TurmaEntity turmaEntity : listEntity){
+
+            TurmaDTO turma = new TurmaDTO();
+            turma.setDtInicio(turma.getDtInicio());
+            turma.setDtFim(turma.getDtFim());
+
+            CursoDTO curso = new CursoDTO();
+            curso.setNome(turmaEntity.getCurso().getNomeCurso());
+            curso.setCargaHoraria(turmaEntity.getCurso().getNrCargaHoraria());
+
+            turma.setCurso(curso);
 
 
+            //pegar todos os alunos desse curso
+            List<AlunoEntity> alunosEntity = turmaEntity.getAlunos();
+            List<AlunoDTO> alunosDTO = new ArrayList<>();
+
+            for(AlunoEntity alunoEntity: alunosEntity){
+                AlunoDTO aluno = new AlunoDTO();
+                aluno.setNome(alunoEntity.getNomeAluno());
+                aluno.setCpf(alunoEntity.getCpf());
+
+                alunosDTO.add(aluno);
+            }
+
+            //pegar todos os instrutores dessa turma
+            List<InstrutorEntity> instrutores = turmaEntity.getInstrutores();
+            List<InstrutorDTO> instrutoresDTO = new ArrayList<>();
+
+            for(InstrutorEntity instrutorEntity : instrutores){
+                InstrutorDTO instrutor = new InstrutorDTO();
+                instrutor.setNome(instrutorEntity.getNomeInstrutor());
+                instrutor.setValorHora(instrutorEntity.getValorHora());
+
+                instrutoresDTO.add(instrutor);
+            }
+
+            turma.setAlunos(alunosDTO);
+            turma.setInstrutores(instrutoresDTO);
+            listDTO.add(turma);
+        }
         return listDTO;
     }
 }

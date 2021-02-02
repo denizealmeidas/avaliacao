@@ -6,6 +6,5 @@ import lombok.Data;
 public class CursoDTO {
 
     private String nome;
-
     private Integer cargaHoraria;
 }
